@@ -1,7 +1,7 @@
 package com.chatwork.quiz.collection
 
-import com.chatwork.quiz.{MySome, MyNone}
-import org.scalatest.{FunSpec, Matchers}
+import com.chatwork.quiz.{ MySome, MyNone }
+import org.scalatest.{ FunSpec, Matchers }
 
 class MyListSpec extends FunSpec with Matchers {
 
@@ -9,6 +9,12 @@ class MyListSpec extends FunSpec with Matchers {
     it("should return a new MyList instance") {
       MyList(1, 2, 3) shouldEqual MyCons(1, MyCons(2, MyCons(3, MyNil)))
       MyList() shouldEqual MyNil
+    }
+  }
+
+  describe("MyList#length") {
+    it("should return the length of List") {
+      MyList(1, 2, 3).length shouldEqual (3)
     }
   }
 

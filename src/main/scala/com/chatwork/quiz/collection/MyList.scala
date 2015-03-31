@@ -5,7 +5,10 @@ import com.chatwork.quiz.MyOption
 sealed trait MyList[+A] {
 
   // Easy
-  def length: Int = ???
+  def length: Int = this match {
+    case MyCons(_, t) => t.length + 1
+    case _            => 0
+  }
 
   // Normal
   def foldLeft[B](z: B)(f: (B, A) => B): B = ???
