@@ -38,7 +38,7 @@ sealed trait MyList[+A] {
   // scalastyle:on
 
   // Normal
-  def map[B](f: A => B): MyList[B] = this.foldRight(MyList.empty[B]) { (a, b) => f(a) :: b }
+  def map[B](f: A => B): MyList[B] = this flatMap { a => MyList(f(a)) }
 
   // Normal
   def flatMap[B](f: A => MyList[B]): MyList[B] = this.foldLeft(MyList.empty[B]) { (a, b) => a ++ f(b) }
