@@ -11,12 +11,21 @@ sealed trait MyList[+A] {
   }
 
   // Normal
-  def foldLeft[B](z: B)(f: (B, A) => B): B = ???
+  def foldLeft[B](z: B)(f: (B, A) => B): B = {
+    def g(as: MyList[A])(b: B): B = as match {
+      case MyCons(h, t) => g(t)(f(b, h))
+      case _            => b
+    }
+    g(this)(z)
+  }
 
   // 難易度選択制
   // Normal: 条件 - 特にありません、気の向くままに実装してください。
   // Hard:   条件 - foldLeftを使って実装してください。
-  def foldRight[B](z: B)(f: (A, B) => B): B = ???
+  def foldRight[B](z: B)(f: (A, B) => B): B = this match {
+    case MyCons(h, t) => f(h, t.foldRight(z)(f))
+    case _            => z
+  }
 
   // Normal
   // scalastyle:off
