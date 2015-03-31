@@ -29,7 +29,7 @@ sealed trait MyList[+A] {
 
   // Normal
   // scalastyle:off
-  def ::[B >: A](b: B): MyList[B] = ???
+  def ::[B >: A](b: B): MyList[B] = MyCons(b, this)
   // scalastyle:on
 
   // Normal
