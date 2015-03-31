@@ -33,7 +33,7 @@ sealed trait MyList[+A] {
   // scalastyle:on
 
   // Normal
-  def reverse: MyList[A] = ???
+  def reverse: MyList[A] = this.foldLeft(MyList.empty[A]) { (as, a) => a :: as }
 
   // Normal
   // scalastyle:off
