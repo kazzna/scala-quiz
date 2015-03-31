@@ -22,10 +22,7 @@ sealed trait MyList[+A] {
   // 難易度選択制
   // Normal: 条件 - 特にありません、気の向くままに実装してください。
   // Hard:   条件 - foldLeftを使って実装してください。
-  def foldRight[B](z: B)(f: (A, B) => B): B = this match {
-    case MyCons(h, t) => f(h, t.foldRight(z)(f))
-    case _            => z
-  }
+  def foldRight[B](z: B)(f: (A, B) => B): B = this.reverse.foldLeft(z) { (b, a) => f(a, b) }
 
   // Normal
   // scalastyle:off
