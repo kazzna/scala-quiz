@@ -34,7 +34,7 @@ sealed trait MyList[+A] {
 
   // Normal
   // scalastyle:off
-  def ++[B >: A](b: MyList[B]): MyList[B] = ???
+  def ++[B >: A](b: MyList[B]): MyList[B] = this.foldRight(b) { (a, b) => a :: b }
   // scalastyle:on
 
   // Normal
