@@ -5,10 +5,7 @@ import com.chatwork.quiz.MyOption
 sealed trait MyList[+A] {
 
   // Easy
-  def length: Int = this match {
-    case MyCons(_, t) => t.length + 1
-    case _            => 0
-  }
+  def length: Int = this.foldLeft(0) { (a, _) => a + 1 }
 
   // Normal
   def foldLeft[B](z: B)(f: (B, A) => B): B = {
@@ -50,7 +47,23 @@ sealed trait MyList[+A] {
 
   // Normal: 条件 - filterと同様の実装でも構いません。
   // Hard:   条件 - 中間リストを生成しないように実装してください。
-  def withFilter(f: A => Boolean): MyList[A] = ???
+  def withFilter(f: A => Boolean): MyList[A] = {
+    case class WithFilter[A](as: MyList[A], f: A => Boolean) extends MyList[A] {
+      override def foldLeft[B](z: B)(g: (B, A) => B): B = {
+        def h(as: MyList[A])(b: B): B = as match {
+          case MyCons(a, as) => if (f(a)) h(as)(g(b, a)) else h(as)(b)
+          case _             => b
+        }
+        h(as)(z)
+      }
+
+      override def withFilter(g: A => Boolean): MyList[A] = {
+        val h = (a: A) => f(a) && g(a)
+        WithFilter(as, h)
+      }
+    }
+    WithFilter(this, f)
+  }
 
   // Normal
   def find(f: A => Boolean): MyOption[A] = ???

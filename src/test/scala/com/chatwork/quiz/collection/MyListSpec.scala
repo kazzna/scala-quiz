@@ -66,6 +66,18 @@ class MyListSpec extends FunSpec with Matchers {
     }
   }
 
+  describe("MyList#withFilter") {
+    it("should return same values with filter") {
+      def s[A <% AnyRef](a: A, b: String) = a.toString + b
+      val a = MyList(1, 2, 3, 4, 5)
+      a.withFilter(_ > 3).foldRight("")(s) shouldEqual a.filter(_ > 3).foldRight("")(s)
+      val b = MyList("aaa", "a", "aa", "bbb", "b", "bb", "abb", "ab", "c")
+      val f = (x: String) => x.length != 2
+      val g = (x: String) => x.startsWith("a")
+      b.withFilter(f).withFilter(g).foldRight("")(s) shouldEqual b.filter(f).filter(g).foldRight("")(s)
+    }
+  }
+
   describe("MyList#find") {
     it("should return the first element of the sequence satisfying a predicate") {
       MyList(1, 2, 3, 4, 5).find(_ == 1) shouldEqual MySome(1)
