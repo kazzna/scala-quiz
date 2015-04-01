@@ -44,7 +44,9 @@ sealed trait MyList[+A] {
   def flatMap[B](f: A => MyList[B]): MyList[B] = this.foldLeft(MyList.empty[B]) { (a, b) => a ++ f(b) }
 
   // Normal
-  def filter(f: A => Boolean): MyList[A] = ???
+  def filter(f: A => Boolean): MyList[A] = this.foldRight(MyList.empty[A]) { (a, b) =>
+    if (f(a)) a :: b else b
+  }
 
   // Normal: 条件 - filterと同様の実装でも構いません。
   // Hard:   条件 - 中間リストを生成しないように実装してください。
