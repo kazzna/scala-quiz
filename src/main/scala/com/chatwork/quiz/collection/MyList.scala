@@ -1,6 +1,6 @@
 package com.chatwork.quiz.collection
 
-import com.chatwork.quiz.MyOption
+import com.chatwork.quiz.{ MyNone, MyOption, MySome }
 
 sealed trait MyList[+A] {
 
@@ -66,7 +66,10 @@ sealed trait MyList[+A] {
   }
 
   // Normal
-  def find(f: A => Boolean): MyOption[A] = ???
+  def find(f: A => Boolean): MyOption[A] = this.filter(f) match {
+    case MyCons(a, _) => MySome(a)
+    case _            => MyNone
+  }
 
   // Normal
   def startsWith[B >: A](prefix: MyList[B]): Boolean = ???

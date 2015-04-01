@@ -105,6 +105,6 @@ object MyOption {
    * @tparam A 値の型
    * @return [[MyOption]]
    */
-  def apply[A](value: A): MyOption[A] = ???
+  def apply[A](value: A): MyOption[A] = MySome(value)
 
 }
