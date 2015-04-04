@@ -73,7 +73,7 @@ sealed trait MyOption[+A] {
  */
 case object MyNone extends MyOption[Nothing] {
 
-  def get: Nothing = ???
+  def get: Nothing = throw new java.util.NoSuchElementException
 
   def isEmpty: Boolean = ???
 
@@ -87,7 +87,7 @@ case object MyNone extends MyOption[Nothing] {
  */
 case class MySome[+A](value: A) extends MyOption[A] {
 
-  def get: A = ???
+  def get: A = value
 
   def isEmpty: Boolean = ???
 
