@@ -55,7 +55,10 @@ sealed trait MyOption[+A] {
    * @tparam B 新しい要素型
    * @return 値
    */
-  def getOrElse[B >: A](elseValue: B): B = ???
+  def getOrElse[B >: A](elseValue: B): B = this match {
+    case MySome(a) => a
+    case _         => elseValue
+  }
 
   /**
    * 値が存在しない場合に、指定した式を評価し返す。
