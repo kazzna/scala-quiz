@@ -78,7 +78,7 @@ case object MyNone extends MyOption[Nothing] {
 
   def get: Nothing = throw new java.util.NoSuchElementException
 
-  def isEmpty: Boolean = ???
+  def isEmpty: Boolean = true
 
 }
 
@@ -92,7 +92,7 @@ case class MySome[+A](value: A) extends MyOption[A] {
 
   def get: A = value
 
-  def isEmpty: Boolean = ???
+  def isEmpty: Boolean = false
 
 }
 
