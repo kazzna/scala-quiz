@@ -29,7 +29,10 @@ sealed trait MyOption[+A] {
    * @tparam B 新しい型
    * @return 新しい [[MyOption]]
    */
-  def map[B](f: A => B): MyOption[B] = ???
+  def map[B](f: A => B): MyOption[B] = this match {
+    case MySome(a) => MyOption(f(a))
+    case _         => MyNone
+  }
 
   /**
    * 値が存在する場合に、値の変換を行う。
