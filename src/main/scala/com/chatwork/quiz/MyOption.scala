@@ -41,7 +41,10 @@ sealed trait MyOption[+A] {
    * @tparam B 新しい型
    * @return 新しい [[MyOption]]
    */
-  def flatMap[B](f: A => MyOption[B]): MyOption[B] = ???
+  def flatMap[B](f: A => MyOption[B]): MyOption[B] = this match {
+    case MySome(a) => f(a)
+    case _         => MyNone
+  }
 
   /**
    * 値が存在する場合に、値をフィルタリングする。
