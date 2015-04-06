@@ -49,7 +49,8 @@ sealed trait MyOption[+A] {
    * @param f フィルターのための述語関数
    * @return 新しい [[MyOption]]
    */
-  def filter(f: A => Boolean): MyOption[A] = ???
+  def filter(f: A => Boolean): MyOption[A] =
+    this.flatMap { a => if (f(a)) this else MyNone }
 
   /**
    * 格納された値を返す。値がない場合は指定された値を返す。
