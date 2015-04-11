@@ -3,12 +3,12 @@ package com.chatwork.quiz.misc
 /**
  * [[BTree]]に格納される要素。
  */
-sealed trait Node {
+sealed trait Node[+A] {
 
   /**
    * ノードが持つ値。
    */
-  val value: Int
+  val value: A
 
   /**
    * ノード数。
@@ -18,7 +18,7 @@ sealed trait Node {
   /**
    * ノードが保持するすべての値の合計値。
    */
-  val sum: Int
+  val sum: A
 
   /**
    * ノードが保持するすべての値の平均値。
@@ -28,12 +28,12 @@ sealed trait Node {
   /**
    * ノードが保持する最大値。
    */
-  val max: Int
+  val max: A
 
   /**
    * ノードが保持する最小値。
    */
-  val min: Int
+  val min: A
 
   /**
    * 指定した値を保持するノードを検索する。
@@ -41,7 +41,7 @@ sealed trait Node {
    * @param value 値
    * @return ノード
    */
-  def find(value: Int): Option[Node]
+  def find[B >: A](value: B): Option[Node[B]]
 
 }
 
@@ -52,19 +52,19 @@ sealed trait Node {
  * @param value 値
  * @param right 右の[[Node]]
  */
-case class Branch(left: Node, value: Int, right: Node) extends Node {
+case class Branch[+A](left: Node[A], value: A, right: Node[A]) extends Node[A] {
 
   val size: Int = ???
 
-  val sum: Int = ???
+  val sum: A = ???
 
   val avg: Double = ???
 
-  val max: Int = ???
+  val max: A = ???
 
-  val min: Int = ???
+  val min: A = ???
 
-  def find(value: Int): Option[Node] = ???
+  def find[B >: A](value: B): Option[Node[B]] = ???
 
 }
 
@@ -73,19 +73,19 @@ case class Branch(left: Node, value: Int, right: Node) extends Node {
  *
  * @param value 値
  */
-case class Leaf(value: Int) extends Node {
+case class Leaf[+A](value: A) extends Node[A] {
 
   val size: Int = ???
 
-  val sum: Int = ???
+  val sum: A = ???
 
   val avg: Double = ???
 
-  val max: Int = ???
+  val max: A = ???
 
-  val min: Int = ???
+  val min: A = ???
 
-  def find(value: Int): Option[Node] = ???
+  def find[B >: A](value: B): Option[Node[B]] = ???
 
 }
 
@@ -94,19 +94,19 @@ case class Leaf(value: Int) extends Node {
  *
  * @param node 頂点のノード
  */
-case class BTree(node: Node) {
+case class BTree[+A](node: Node[A]) {
 
   lazy val size: Int = node.size
 
-  lazy val sum: Int = node.sum
+  lazy val sum: A = node.sum
 
   lazy val avg: Double = node.avg
 
-  lazy val max: Int = node.max
+  lazy val max: A = node.max
 
-  lazy val min: Int = node.min
+  lazy val min: A = node.min
 
-  def find(value: Int): Option[Node] = node.find(value)
+  def find[B >: A](value: B): Option[Node[B]] = node.find(value)
 
 }
 
@@ -121,7 +121,7 @@ object BTree {
    * @param values ノードに格納する値の集合
    * @return [[BTree]]
    */
-  def apply(values: List[Int]): BTree = ???
+  def apply(values: List[Int]): BTree[Int] = ???
 
 }
 
