@@ -71,8 +71,8 @@ sealed trait MyOption[+A] {
    * @tparam B 新しい要素型
    * @return elseValueを評価した値
    */
-  def orElse[B >: A](elseValue: => MyOption[B]): MyOption[B] = ???
-
+  def orElse[B >: A](elseValue: => MyOption[B]): MyOption[B] =
+    if (this.isEmpty) elseValue else this
 }
 
 /**
