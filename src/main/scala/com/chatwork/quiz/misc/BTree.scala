@@ -73,17 +73,17 @@ case class Branch[+A](left: Node[A], value: A, right: Node[A]) extends Node[A] {
  *
  * @param value 値
  */
-case class Leaf[+A](value: A) extends Node[A] {
+case class Leaf[+A](value: A)(implicit n: Numeric[A]) extends Node[A] {
 
-  val size: Int = ???
+  val size: Int = 1
 
-  val sum: A = ???
+  val sum: A = value
 
-  val avg: Double = ???
+  val avg: Double = n.toDouble(value)
 
-  val max: A = ???
+  val max: A = value
 
-  val min: A = ???
+  val min: A = value
 
   def find[B >: A](value: B): Option[Node[B]] = ???
 
@@ -124,4 +124,3 @@ object BTree {
   def apply(values: List[Int]): BTree[Int] = ???
 
 }
-
